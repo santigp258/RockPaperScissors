@@ -20,8 +20,14 @@ const app = document.getElementById("app");
 
 function getPlayerName(e) {
   e.preventDefault();
+
   const user1 = document.getElementById("player1").value;
   const user2 = document.getElementById("player2").value;
+
+  if (!user1.value || !user2.value) {
+    console.log("Hi!");
+    return;
+  }
   players[0].name = user1;
   players[1].name = user2;
   startGame();
@@ -45,6 +51,8 @@ function startGame() {
           </div>
           `;
   }
+  template +=
+    '<button id="play" class="btn btn-outline-primary mt-2" onclick="result()">Play</button>';
   app.innerHTML = template;
   getValues();
 }
@@ -73,6 +81,27 @@ function getValues() {
       this.classList.toggle("selected2");
     });
   });
+}
+
+function result() {
+  const user1 = players[0].selected;
+  const user2 = players[1].selected;
+
+  switch (calcResult(user1, user2)) {
+    case 0:
+      app.innerHTML = `<p class="results"> Too bad, it's a tie!</p>`;
+      break;
+    case 1:
+      app.innerHTML = `<p class="results"> Congratulations! ${players[0].name} is the winner! </p>`;
+      break;
+    case 2:
+      app.innerHTML = `<p class="results"> Congratulations! ${players[1].name} is the winner! </p>`;
+      break;
+    default:
+      app.innerHTML = "Default";
+      break;
+  }
+  app.innerHTML += `<button id="play" class="btn btn-outline-primary mt-2" onclick="startGame()">Play again</button>`;
 }
 
 function calcResult(user1, user2) {
