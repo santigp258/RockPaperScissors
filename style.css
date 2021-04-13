@@ -9,6 +9,21 @@ body {
   color: #fff;
 }
 
+h1 {
+  text-align: center;
+}
+
 #app {
   width: 80%;
+}
+
+img {
+  width: 100px;
+}
+
+.selected1 {
+  background-color: tomato;
+}
+.selected2 {
+  background-color: rgba(37, 3, 56, 0.52);
 }

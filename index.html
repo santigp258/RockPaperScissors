@@ -20,7 +20,11 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="app" class="align-items-center d-flex justify-content-center h-100 m-auto">
+    <h1>Rock Paper Scissors</h1>
+    <div
+      id="app"
+      class="align-items-center d-flex justify-content-center h-100 m-auto flex-column"
+    >
       <form class="row">
         <div class="w-50">
           <h1>Player 1</h1>
@@ -42,14 +46,15 @@
             <input
               type="text"
               class="form-control"
-              id="name"
               id="player2"
               placeholder="Enter name"
               autocomplete="off"
             />
           </div>
         </div>
-        <button type="submit" class="btn btn-primary w-50 m-auto">Submit</button>
+        <button type="submit" class="btn btn-primary w-50 m-auto">
+          Submit
+        </button>
       </form>
     </div>
     <script src="./app.js"></script>
