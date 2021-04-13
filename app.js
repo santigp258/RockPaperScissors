@@ -15,17 +15,23 @@ let players = [
 ];
 let lastOption1;
 let lastOption2;
+
 document.addEventListener("submit", getPlayerName);
+
 const app = document.getElementById("app");
+const alert = document.getElementById("alert");
 
 function getPlayerName(e) {
   e.preventDefault();
 
   const user1 = document.getElementById("player1").value;
   const user2 = document.getElementById("player2").value;
-
-  if (!user1.value || !user2.value) {
-    console.log("Hi!");
+  if (user1.trim() == "" || user2.trim() == "") {
+    alert.classList.remove("hide");
+    setTimeout(() => {
+      alert.classList.add("hide");
+    }, 3000);
+    alert.innerHTML = "Enter your name, please";
     return;
   }
   players[0].name = user1;
@@ -38,7 +44,7 @@ function startGame() {
   for (let index = 1; index <= players.length; index++) {
     template += `
         <div id="player${index}">
-              <h1>Player ${index}</h1>
+              <h1  class="mb-4 mt-2">Player ${index}</h1>
                 <button id="rock${index}" type="button" value="${rock}">
                   <img src="img/rock.svg" />
                 </button>
@@ -52,7 +58,7 @@ function startGame() {
           `;
   }
   template +=
-    '<button id="play" class="btn btn-outline-primary mt-2" onclick="result()">Play</button>';
+    '<button id="play" class="btn btn-outline-primary mt-5" onclick="result()">Play</button>';
   app.innerHTML = template;
   getValues();
 }
@@ -63,22 +69,22 @@ function getValues() {
   player1.forEach((e) => {
     e.addEventListener("click", function (e) {
       if (lastOption1) {
-        lastOption1.classList.remove("selected1");
+        lastOption1.classList.remove("selected");
       }
       lastOption1 = this;
       players[0].selected = this.value;
-      this.classList.toggle("selected1");
+      this.classList.toggle("selected");
     });
   });
 
   player2.forEach((e) => {
     e.addEventListener("click", function (e) {
       if (lastOption2) {
-        lastOption2.classList.remove("selected2");
+        lastOption2.classList.remove("selected");
       }
       lastOption2 = this;
       players[1].selected = this.value;
-      this.classList.toggle("selected2");
+      this.classList.toggle("selected");
     });
   });
 }
@@ -87,21 +93,27 @@ function result() {
   const user1 = players[0].selected;
   const user2 = players[1].selected;
 
+  let template = '<div class="result__container">';
   switch (calcResult(user1, user2)) {
     case 0:
-      app.innerHTML = `<p class="results"> Too bad, it's a tie!</p>`;
+      template += `<p class="results"> Too bad, it's a tie!</p>`;
       break;
     case 1:
-      app.innerHTML = `<p class="results"> Congratulations! ${players[0].name} is the winner! </p>`;
+      template += `<p class="results"> Congratulations! <span>${players[0].name}</span> is the winner! </p>`;
       break;
     case 2:
-      app.innerHTML = `<p class="results"> Congratulations! ${players[1].name} is the winner! </p>`;
+      template += `<p class="results"> Congratulations! <span>${players[1].name}</span> is the winner! </p>`;
       break;
     default:
-      app.innerHTML = "Default";
+      template += "Default";
       break;
   }
-  app.innerHTML += `<button id="play" class="btn btn-outline-primary mt-2" onclick="startGame()">Play again</button>`;
+  template += `<button id="play" class="btn btn-outline-primary" onclick="redirect()">Play again</button></div>`;
+  app.innerHTML = template;
+}
+
+function redirect() {
+  window.location.href = "";
 }
 
 function calcResult(user1, user2) {
